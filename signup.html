@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Laundry OnLine</title>
+    <link rel="stylesheet" type="text/css" href="css/signup.css">
+    <link rel="stylesheet" type="text/css" href="css/signup_2.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            <h1>Signup</h1>   
+            <br>     
+            <form method="POST">
+                <p>Nama :</p>
+                <input type="text" name="name" placeholder="Masukkan nama" required>
+                <p>E-Mail :</p>
+                <input type="email" name="email" placeholder="Masukkan e-mail" required>
+                <p>Nomor Telepon :</p>
+                <input type="tel" name="nomorTelepon" placeholder="081234567890" pattern=".{10,14}" required>
+                <p>Password :</p>
+                <input type="password" name="password" id="password" pattern=".{8,}" required title="Minimum 8 karakter" placeholder="Masukkan password">
+                <input type="checkbox" onclick="myFunction()"> Show Password
+                <br><br>
+                <p>
+                    <button name="submit">Signup</button>
+                </p>
+                <br>
+                <p>
+                    <a href="/login.html">Sudah mendaftar? Silahkan login</a>
+                </p>
+                <p>
+                    <a href="/index.html"><-- Back to Home</a>
+                </p>
+            </form>
+            <?php
+            session_start();
+            require_once "database.html";
+            $pdo = new database();
+
+            if(!isset($_SESSION['email']) == 0 ){
+                header('Location: dashboard.html');
+            }
+
+            if (isset($_POST['submit'])){
+                $email = $_POST['email'];
+                $check_data = $pdo->check_data($email);
+
+                if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['nomorTelepon'])) {
+                    echo '<div class="box"><div class="square">';
+                    echo("Field tidak boleh kosong!");
+                    echo '</div></div>';
+                } else if($check_data > 0){
+                    echo '<div class="box"><div class="square">';
+                    echo("E-mail sudah ada, silahkan gunakan e-mail yang berbeda!");
+                    echo '</div></div>';
+                } else {
+                    $_SESSION['message'] = 'Data sudah masuk, silahkan kembali <a href="/login.html">Login</a>';
+                    echo '<div class="box"><div class="square">';
+                    echo $_SESSION['message'];
+                    echo '</div></div>';
+                    unset($_SESSION['message']);
+                    $pdo->tambah_data($_POST['name'], $_POST['email'], $_POST['password'], $_POST['nomorTelepon']);
+                }
+            } 
+            ?>
+        </div>
+    </div>
+    <script type="application/javascript">
+        function myFunction(){
+            var x = document.getElementById("password");
+            if (x.type === "password"){
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Laundry OnLine</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/login_2.css">
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="form">
+            <h1>Login</h1>   
+            <br>     
+            <form method="POST" action="your_login_processing_script.html"> <!-- Ganti dengan script PHP yang memproses login -->
+                <p>E-Mail :</p>
+                <input type="email" name="email" required placeholder="Masukkan e-mail">
+                <p>Password :</p>
+                <input type="password" id="password" name="password" required placeholder="Masukkan password">
+                <input type="checkbox" onclick="myFunction()"> Show Password
+                <br><br>
+                <p>
+                    <button name="submit">Login</button>
+                </p>
+                <br>
+                <p>
+                    <a href="/signup.html">Belum mendaftar? Daftar Sekarang!</a>
+                </p>
+                <p>
+                    <a href="/index.html"><-- Back to Home</a>
+                </p>
+            </form>
+            <div class="box" id="error-message" style="display:none;">
+                <div class="square">
+                    E-mail atau password salah, silahkan ulangi kembali
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="application/javascript">
+    // Untuk memunculkan password di form
+    function myFunction(){
+        var x = document.getElementById("password");
+        if (x.type === "password"){
+            x.type = "text";
+        } 
+        else{
+            x.type = "password";
+        }
+    }
+
+    // Contoh untuk menampilkan pesan error (Anda perlu menyesuaikan ini dengan logika backend Anda)
+    function showError() {
+        document.getElementById('error-message').style.display = 'block';
+    }
+</script>
+</html>
